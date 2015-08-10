@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style type="text/css">
+    h2 span {
+        color: gray;
+        font-size: .8em;
+    }
+    </style>
+</head>
+
+<body>
+    <ul class="tweets">
+        <script id="template" type="text/x-handlebars-template">
+            {{#each this}}
+            <li>
+                <h1>{{fullName author}}</h1>
+                <p>{{{tweets}}}</p>
+                {{#if quotes}}
+                <h3> {{quotes}} </h3> {{else}}
+                <h3>Author does not have a quotes</h3> {{/if}}
+            </li>
+            {{/each}}
+        </script>
+    </ul>
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./bower_components/handlebars/handlebars.min.js"></script>
+    <script>
+    (function() {
+        // body...
+        var data = [{
+            author: {first:'Jeffery', last: 'Way', age: 27},
+            tweets: '30 Days to learn jquery rocks',
+            age: 27
+        }, {
+            author: {first:'John', last: 'Doe', age: 45},
+            tweets: '<strong>30 Days</strong> to learn jquery rocks',
+            quotes: 'Never ever, ever give up !'
+        }];
+
+        Handlebars.registerHelper('fullName', function(author){
+        	return author.first + ' ' + author.last + '-' + author.age;
+        })
+        var template = Handlebars.compile($('#template').html());
+        var temp = template(data);
+        $('ul.tweets').append(temp);
+    })();
+    </script>
+</body>
+
+</html>
